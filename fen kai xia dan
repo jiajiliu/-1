@@ -1,0 +1,28 @@
+Num = length(data(:,3));
+sign = 0;
+
+for j = 1:Num
+    if (data(j,3) == 1 || data(j,3) == -1) && sign == 0
+        sign = 1;
+        startpoint = j;
+    elseif sign == 1 && (data(j,3) == 1 || data(j,3) == -1)
+        endpoint = j;
+        temp = data(startpoint+1:endpoint,4);
+        if length(temp) >= 4
+            temp(1) = temp(1)/4;
+            temp(2) = temp(2)/4*2;
+            temp(3) = temp(3)/4*3;
+        elseif length(temp) == 3
+            temp(1) = temp(1)/4;
+            temp(2) = temp(2)/4*2;
+            temp(3) = temp(3)/4*2;
+        elseif length(temp) == 2
+            temp(1) = temp(1)/4;
+            temp(2) = temp(2)/4;
+        elseif length(temp) == 1
+            temp(1) = temp(1)/4;
+        end
+        data(startpoint+1:endpoint,4) = temp;
+        startpoint = j;
+    end
+end
